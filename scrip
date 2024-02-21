@@ -1,0 +1,43 @@
+import numpy as np
+import matplotlib.pyplot as plt
+ 
+def draw_trajectory(u, theta, h0):
+    theta = np.radians(theta)
+    g = 9.8
+
+    a = -0.5 * g
+    b = u * np.sin(theta)
+    c = h0
+    t_flight = np.roots([a, b, c])
+
+    t_flight = max(t_flight)
+
+    intervals = np.arange(0, t_flight, 0.001)
+
+    x = []
+    y = []
+
+    for t in intervals:
+        y_final = h0 + u * np.sin(theta) * t - 0.5 * g * t ** 2
+        x.append(u * np.cos(theta) * t)
+        y.append(y_final)
+
+    plt.plot(x, y)
+    plt.xlabel('Distancia (m)')
+    plt.ylabel('Altura (m)')
+    plt.title('Tiro parabólico')
+
+print("")
+print("Lanzamos una piedra desde un edificio")
+print("")
+print("¿Con qué velocidad la lanzamos? (m/s):")
+u = float(input())
+
+print("¿Con qué inclinación la lanzas? (º):")
+theta = float(input())
+
+print("¿Qué altura tiene el edificio? (m):")
+h0 = float(input())
+
+draw_trajectory(u, theta, h0)
+plt.show()
